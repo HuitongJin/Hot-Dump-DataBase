@@ -40,7 +40,7 @@ error_code DBHandler::createTable(const string& tableName_, const vector<string>
 		return _TABLE_EXIST;
 	}
 	_tableName.push_back(tableName_);
-	_dbMeta.save(_tableName, _DBPath + "\\meta.json");
+	_dbMeta.save(_tableName, _DBPath);
 	return _TRUE;
 }
 
@@ -48,13 +48,16 @@ error_code DBHandler::createTable(const string& tableName_, const vector<string>
 {
 	int code = _tableHandler.create(_DBPath + "\\" + tableName_, tableName_, columnName_[0],
 		columnName_, columnName_.size());
+	/// std::cout << "createTable true" << std::endl; // 正确
 	if (code == _TABLE_EXIST)
 	{
 		return _TABLE_EXIST;
 	}
 	string _primaryKey = columnName_[0];
 	_tableName.push_back(tableName_);
-	_dbMeta.save(_tableName, _DBPath + "\\meta.json");
+	_dbMeta.save(_tableName, _DBPath);
+	// json testJson = _dbMeta.load();
+	// std::cout << testJson << std::endl; //正确
 	return _TRUE;
 
 }
@@ -62,13 +65,15 @@ error_code DBHandler::createTable(const string& tableName_, const vector<string>
 error_code DBHandler::open(const string& DBName_)
 {
 	DBMeta dbMeta;
-	int code = dbMeta.open("D:\\HDSDataBase\\" + _DBName);
+	_DBName = DBName_;
+	_DBPath = "D:\\HDSDataBase\\" + _DBName;
+	// std::cout << "DBPATH " << _DBPath << std::endl;//正确
+	int code = dbMeta.open(_DBPath + "\\meta.json");
+	// std::cout << "dbmate: "<<dbMeta.load() << std::endl;
 	if (code == _NOT_EXIST_DATABASE)
 	{
 		return _NOT_EXIST_DATABASE;
 	}
-	_DBName = DBName_;
-	_DBPath = "D:\\HDSDataBase\\" + _DBName;
 	_dbMeta = DBMeta(_DBPath + "\\meta.json");
 
 	// 加载_DBMeta的数据到_tableName中
@@ -89,7 +94,9 @@ error_code DBHandler::open(const string& DBName_)
 
 TableHandler DBHandler::openTable(const string& tableName_)
 {
+	/// std::cout << "DBPATH " << _DBPath << std::endl;
 	_tableHandler.open(_DBPath + "\\" + tableName_, tableName_); 
+	// std::cout << "openTable true" << std::endl;  // 调试正确
 	return _tableHandler;
 }
 

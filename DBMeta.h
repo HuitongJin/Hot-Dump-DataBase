@@ -38,7 +38,7 @@ class DBMeta
 
 		~DBMeta();
 
-		error_code save(const vector<string>& tableName_, const string& metaFilePath_);
+		error_code save(const vector<string>& tableName_, const string& FilePath_);
 
 		error_code open(const string& DBMetaFilePath_);
 

@@ -51,7 +51,7 @@ class TableHandler
 
         error_code create(const string& tableFilePath_, const string& tableName_,
                           const string& primaryKey_, const vector<string>& columnName_,
-                          unsigned int sizeof_column_);
+                          int sizeof_column_);
 
         error_code open(const string& tableFilePath_, const string& tableName_);
 
@@ -70,7 +70,7 @@ class TableHandler
         
         string           _tableName;           // 表名
         
-        unsigned int     _sizeof_column = 0;   // 列的数量
+        int              _sizeof_column = 0;   // 列的数量
 
         DataFileHandler  _dataFileHandler;     // 表对应的二进制数据
 

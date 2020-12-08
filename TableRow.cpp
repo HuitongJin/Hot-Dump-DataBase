@@ -16,6 +16,7 @@ json* TableRow::read(int offSet_, int numberOfLine_)
 	for (int i = 0; i < numberOfLine_; i++)
 	{
 		json* newJson = _tableHandler.read(offSet_ + i);
+		// std::cout << *newJson << std::endl;
 		infoJson->push_back(*newJson);
 	}
 	return infoJson;
@@ -23,8 +24,9 @@ json* TableRow::read(int offSet_, int numberOfLine_)
 
 int TableRow::write(const json& rowInformation_)
 {
-	for (unsigned int i = 0; i < rowInformation_.size(); i++)
+	for (int i = 0; i < rowInformation_.size(); i++)
 	{
+		// std::cout << rowInformation_[i] << std::endl; // ÕýÈ·
 		_tableHandler.write(rowInformation_[i]);
 	}
 	return 1;

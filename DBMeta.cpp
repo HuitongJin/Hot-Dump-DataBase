@@ -12,15 +12,15 @@ DBMeta::~DBMeta()
 	_DBMetaFilePath = "";
 }
 
-error_code DBMeta::save(const vector<string>& tableName_, const string& metaFilePath_)
+error_code DBMeta::save(const vector<string>& tableName_, const string& FilePath_)
 {
-	_DBMetaFilePath = metaFilePath_;
+	_DBMetaFilePath = FilePath_ + "//meta.json";
 
 	json newMetaJson;
 
 	for (int i = 0; i < tableName_.size(); i++)
 	{
-		newMetaJson[tableName_[i]] = _DBMetaFilePath + "\\" + tableName_[i];
+		newMetaJson[tableName_[i]] = FilePath_ + "\\" + tableName_[i];
 	}
 
 	_metaJson = newMetaJson;
@@ -45,6 +45,7 @@ error_code DBMeta::open(const string& DBMetaFilePath_)
 		return _NOT_EXIST_DATABASE;
 	}
 	json newMetaJson = this->load();
+	_metaJson = newMetaJson;
 	return _TRUE;
 }
 
@@ -52,10 +53,12 @@ json DBMeta::load()
 {
 	json metaJson_;
 	std::ifstream _metaFile(_DBMetaFilePath);
+	// std::cout << "_DBMetaFilePath " << _DBMetaFilePath << std::endl;
 	if (_metaFile.is_open())
 	{
 		_metaFile >> metaJson_;
 		_metaFile.close();
 	}
+	_metaJson = metaJson_;
 	return metaJson_;
 }

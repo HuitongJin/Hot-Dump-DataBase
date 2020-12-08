@@ -35,6 +35,7 @@ error_code TableMeta::open(const string& metaFilePath_)
 {
 	_metaFilePath = metaFilePath_;
 	json newMetaJson = this->load(_metaFilePath);
+	_metaJson = newMetaJson;
 	_primaryKey = newMetaJson["primaryKey"];
 	return _TRUE;
 }

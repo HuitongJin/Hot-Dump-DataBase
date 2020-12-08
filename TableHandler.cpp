@@ -9,7 +9,7 @@ TableHandler::TableHandler(const TableHandler& _tableHandler)
     _tableName     =  _tableHandler._tableName;
     _tableMeta     =  _tableHandler._tableMeta;
     _sizeof_column =  _tableHandler._sizeof_column;
-    std::cout << "拷贝构造函数:" << _sizeof_column << std::endl;
+    // std::cout << "拷贝构造函数:" << _sizeof_column << std::endl;
     _dataFileHandler.openDataFile(_tableFilePath + "\\data.dat", _sizeof_column);
 }
 
@@ -25,7 +25,7 @@ void TableHandler::operator = (const TableHandler& _tableHandler)
 
 error_code TableHandler::create(const string& tableFilePath_, const string& tableName_,
                                 const string& primaryKey_,    const vector<string>& columnName_,
-                                unsigned int sizeof_column_)
+                                int sizeof_column_)
 {
     int code = _mkdir(tableFilePath_.c_str());
     if (code == -1)
@@ -36,13 +36,16 @@ error_code TableHandler::create(const string& tableFilePath_, const string& tabl
     _tableFilePath = tableFilePath_;
     _tableName = tableName_;
     _sizeof_column = sizeof_column_;
+    // std::cout << "create"<<_sizeof_column << std::endl; // 调试正确
     code = _dataFileHandler.openDataFile(_tableFilePath + "\\data.dat", _sizeof_column);
     if (code == _OPEN_FILE_FAILED)
     {
         return _OPEN_FILE_FAILED;
     }
     code = _tableMeta.save(columnName_, primaryKey_, _tableFilePath + "\\dataMeta.json");
-    fstream meta;
+    json meta;
+    meta = _tableMeta.load(_tableFilePath + "\\dataMeta.json");
+   //  std::cout << "create meta " << meta << std::endl; // 正确
     if (code == _CREATE_TABLEMETA_FAILED)
     {
         return _CREATE_TABLEMETA_FAILED;
@@ -54,8 +57,10 @@ error_code TableHandler::open(const string& tableFilePath_, const string& tableN
 {
     _tableFilePath = tableFilePath_;
     _tableName = tableName_;
+   // std::cout << tableFilePath_ << std::endl;
     json tableMeta_ = _tableMeta.load(tableFilePath_+"\\dataMeta.json");
-    std::cout << tableMeta_ << std::endl;
+   // std::cout << tableMeta_ << std::endl;
+    // std::cout << true << std::endl;
     _sizeof_column = tableMeta_.size() - 1;
     int code = _dataFileHandler.openDataFile(tableFilePath_ + "\\data.dat", _sizeof_column);
     if (code == _OPEN_FILE_FAILED)
@@ -71,7 +76,7 @@ json* TableHandler::read(int offSet_)
     *infoJson = json::array();
     int* info_array = new int[_sizeof_column];
     info_array = _dataFileHandler.read_line(offSet_);
-    for (unsigned int i = 0; i < _sizeof_column; i++)
+    for (int i = 0; i < _sizeof_column; i++)
     {
         infoJson->push_back(info_array[i]);
     }
@@ -81,21 +86,22 @@ json* TableHandler::read(int offSet_)
 
 error_code TableHandler::write(const json& infoJson_)
 {
-    std::cout << _sizeof_column << std::endl;
     int* info_array = new int[_sizeof_column];
     if (infoJson_.size() != _sizeof_column)
     {
         return _ERROR_FORMAL_PARAMETER;
     }
-    for (unsigned int i = 0; i < _sizeof_column; i++)
+   // std::cout << infoJson_ << std::endl;
+    for (int i = 0; i < _sizeof_column; i++)
     {
         if (!infoJson_[i].is_number_integer())
         {
             return _ERROR_FORMAL_PARAMETER;
+            std::cout << "_ERROR_FORMAL_PARAMETER" << std::endl;
         }
         info_array[i] = infoJson_[i];
     }
-    int code = _dataFileHandler.append(info_array);
+    int code = _dataFileHandler.append(info_array, _sizeof_column);
     if (code == _ERROR_FORMAL_PARAMETER)
     {
         return _ERROR_FORMAL_PARAMETER;

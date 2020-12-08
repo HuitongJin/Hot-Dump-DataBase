@@ -17,6 +17,7 @@
 // 需要特别注意的是：这个类中所操作的二进制文件，其数据类型均为int整型。
 
 #include <fstream>
+#include <iostream>
 
 #ifndef _HDSDATABASE_DATAFILEHANDLER_H
 #define _HDSDATABASE_DATAFILEHANDLER_H
@@ -43,13 +44,13 @@ class DataFileHandler
 
         bool isOpen();
 
-        error_code openDataFile(const string& dataFilePath_, unsigned int sizeof_Line_);
+        error_code openDataFile(const string& dataFilePath_, int sizeof_Line_);
 
         error_code openDataFile(const string& dataFilePath_);
 
-        error_code append(int* data_array);
+        error_code append(int* data_array, int size);
 
-        int* read_line(unsigned int begin);
+        int* read_line(int begin);
 
         error_code close();
 
