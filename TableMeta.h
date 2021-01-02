@@ -14,13 +14,13 @@
 // 需要特别注意的是：主键会作为json的一个成员放在最后，所以加载元数据的时候，
 // 注意最后一个元素是主键。
 
+#ifndef _HDSDATABASE_TABLEMETA_H
+#define _HDSDATABASE_TABLEMETA_H
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <nlohmann/json.hpp>
-
-#ifndef _HDSDATABASE_TABLEMETA_H
-#define _HDSDATABASE_TABLEMETA_H
 
 using std::string;
 using std::vector;

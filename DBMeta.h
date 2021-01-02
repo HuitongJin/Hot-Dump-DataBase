@@ -10,13 +10,13 @@
 * 3. json load() 加载元数据，返回一个json对象。                                 *
 *********************************************************************************/
 
+#ifndef _HDSDATABASE_DBMETA_H
+#define _HDSDATABASE_DBMETA_H
+
 #include <iostream>
 #include <fstream>
 #include <vector>
 #include <nlohmann/json.hpp>
-
-#ifndef _HDSDATABASE_DBMETA_H
-#define _HDSDATABASE_DBMETA_H
 
 using std::string;
 using std::vector;

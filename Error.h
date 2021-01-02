@@ -1,10 +1,11 @@
 #pragma once
-#include <string>
-#include <cassert>
-#include <map>
 
 #ifndef _HDSDATABASE_ERROR_H
 #define _HDSDATABASE_ERROR_H
+
+#include <string>
+#include <cassert>
+#include <map>
 
 using std::string;
 using std::map;

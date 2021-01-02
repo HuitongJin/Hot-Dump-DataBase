@@ -1,4 +1,8 @@
 #pragma once
+
+#ifndef _HDSDATABASE_TABLEROW_H
+#define _HDSDATABASE_TABLEROW_H
+
 #include <fstream>
 #include <vector>
 #include <cassert>
@@ -6,9 +10,7 @@
 #include <nlohmann/json.hpp>
 #include "TableHandler.h"
 #include "DBHandler.h"
-
-#ifndef _HDSDATABASE_TABLEROW_H
-#define _HDSDATABASE_TABLEROW_H
+#include "Error.h"
 
 using std::string;
 using std::vector;
@@ -27,7 +29,10 @@ class TableRow
 
 		json* get_column(const string& columnName_);
 
+		void clear();
+
 	private:
 		TableHandler _tableHandler;
+		Error ERROR;
 };
 #endif // !_HDSDATABASE_TABLEROW_H

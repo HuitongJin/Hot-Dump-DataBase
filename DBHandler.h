@@ -19,15 +19,15 @@
 
 // 需要特别注意的是：当你创建的表没有定义主键时，将默认将第一个列名作为主键。
 
+#ifndef _HDSDATABASE_DBHANDLER_H
+#define _HDSDATABASE_DBHANDLER_H
+
 #include <direct.h>
 #include <fstream>
 #include <vector>
 #include <nlohmann/json.hpp>
 #include "TableHandler.h"
 #include "DBMeta.h"
-
-#ifndef _HDSDATABASE_DBHANDLER_H
-#define _HDSDATABASE_DBHANDLER_H
 
 using std::string;
 using std::vector;
@@ -36,10 +36,10 @@ typedef int error_code;
 
 // 这里宏定义错误码：
 #define _TRUE                  0
-#define _DATABASE_EXIST        8
-#define _TABLE_EXIST           9
-#define _OPEN_DATABASE_FAILED  10 
-#define _NOT_EXIST_DATABASE    14   // 不存在数据库
+#define _DATABASE_EXIST        8   // 数据库已存在
+#define _TABLE_EXIST           9   // 表已存在
+#define _OPEN_DATABASE_FAILED  10  // 数据库打开失败 
+#define _NOT_EXIST_DATABASE    14  // 不存在数据库
 
 class DBHandler
 {

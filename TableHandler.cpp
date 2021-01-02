@@ -125,6 +125,11 @@ error_code TableHandler::close()
     return _TRUE;
 }
 
+void TableHandler::clear()
+{
+    _dataFileHandler.clear();
+}
+
 error_code  TableHandler::drop()
 {
     _dataFileHandler.close();

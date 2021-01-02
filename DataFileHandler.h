@@ -16,11 +16,11 @@
 
 // 需要特别注意的是：这个类中所操作的二进制文件，其数据类型均为int整型。
 
-#include <fstream>
-#include <iostream>
-
 #ifndef _HDSDATABASE_DATAFILEHANDLER_H
 #define _HDSDATABASE_DATAFILEHANDLER_H
+
+#include <fstream>
+#include <iostream>
 
 using std::string;
 using std::fstream;
@@ -53,6 +53,8 @@ class DataFileHandler
         int* read_line(int begin);
 
         error_code close();
+
+        void clear();
 
     private:
         string             _dataFilePath;  // 二进制文件的路径

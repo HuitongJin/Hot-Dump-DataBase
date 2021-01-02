@@ -5,7 +5,10 @@ TableRow::TableRow(){}
 TableRow::TableRow(const string& dataBaseName_, const string& tableName_)
 {
 	DBHandler dbHandler;
-	dbHandler.open(dataBaseName_);
+	int code = dbHandler.open(dataBaseName_);
+	if (code != 0) {
+		std::cout << ERROR.GetErrorString(code)<<std::endl;
+	}
 	_tableHandler = dbHandler.openTable(tableName_);
 }
 
@@ -27,9 +30,16 @@ int TableRow::write(const json& rowInformation_)
 	for (int i = 0; i < rowInformation_.size(); i++)
 	{
 		// std::cout << rowInformation_[i] << std::endl; // 正确
-		_tableHandler.write(rowInformation_[i]);
+		int code = _tableHandler.write(rowInformation_[i]);
+		if(code != 0)
+			std::cout << ERROR.GetErrorString(code) << std::endl;
 	}
 	return 1;
+}
+
+void TableRow::clear()
+{
+	_tableHandler.clear();
 }
 
 // 未完成实现

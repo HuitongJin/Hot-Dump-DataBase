@@ -87,3 +87,8 @@ error_code DataFileHandler::close()
 		return _CLOSE_FILE_FAILED;
 	return _TRUE;
 }
+
+void DataFileHandler::clear()
+{
+	_dataFile.clear();
+}

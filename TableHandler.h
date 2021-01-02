@@ -16,6 +16,9 @@
 * 7. error_code  drop() 将这个表删除。                                          *
 *********************************************************************************/
 
+#ifndef _HDSDATABASE_TABLEHANDLER_H
+#define _HDSDATABASE_TABLEHANDLER_H
+
 #include <iostream>
 #include <direct.h>
 #include <fstream>
@@ -23,9 +26,6 @@
 #include <nlohmann/json.hpp>
 #include "DataFileHandler.h"
 #include "TableMeta.h"
-
-#ifndef _HDSDATABASE_TABLEHANDLER_H
-#define _HDSDATABASE_TABLEHANDLER_H
 
 using std::string;
 using std::vector;
@@ -64,6 +64,8 @@ class TableHandler
         error_code close();
 
         error_code  drop();
+
+        void clear();
 
     private:
         string           _tableFilePath;       // 表对应的文件夹路径
